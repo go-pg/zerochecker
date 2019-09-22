@@ -1,4 +1,4 @@
-package iszero
+package zerochecker
 
 import (
 	"database/sql/driver"
@@ -17,7 +17,9 @@ type valueAppender interface {
 	AppendValue(b []byte, flags int) ([]byte, error)
 }
 
-func Checker(typ reflect.Type) func(reflect.Value) bool {
+type Func func(reflect.Value) bool
+
+func Checker(typ reflect.Type) Func {
 	if typ.Implements(isZeroerType) {
 		return isZeroInterface
 	}
